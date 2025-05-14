@@ -1,0 +1,11 @@
+polygon:
+  api_key_ssm_param: "/polygon/apiKey"
+  ticker: "AAPL"
+  start_date: "2025-01-01"
+  end_date: "2025-01-30"
+aws:
+  iam_profile: "mingsha-mlds423-proj-profile"
+  s3_bucket: "polygon-data-stock"
+  output_prefix: "test"
+rate_limit:
+  sleep_seconds: 12
