@@ -1,0 +1,23 @@
+# Environment files
+.env
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Editor/OS metadata
+.idea/
+.DS_Store
+
+# Artifacts and outputs
+artifacts/
+
+# Raw data / models (keep folder but not files)
+data/*
+models/*
+!data/.gitkeep
+!models/.gitkeep
