@@ -15,9 +15,14 @@ __pycache__/
 
 # Artifacts and outputs
 artifacts/
+Model_Artifacts/
 
 # Raw data / models (keep folder but not files)
 data/*
 models/*
 !data/.gitkeep
 !models/.gitkeep
+
+# Large data files
+*.parquet
+combined_data.parquet

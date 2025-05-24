@@ -1,9 +1,20 @@
-from typing import Dict, List
+"""
+Model evaluation utilities for time series forecasting.
+
+This module provides functions for:
+1. Computing performance metrics for model evaluation
+2. Saving metrics to files
+3. Visualizing predicted vs. actual values
+"""
+
 from pathlib import Path
-import yaml
+from typing import Dict, List
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import yaml
+
 
 def compute_metrics(y_true: pd.Series, y_pred: pd.Series, metrics: List[str]) -> Dict[str, float]:
     """
@@ -24,10 +35,13 @@ def compute_metrics(y_true: pd.Series, y_pred: pd.Series, metrics: List[str]) ->
         elif metric.upper() == "MAE":
             results["MAE"] = np.mean(np.abs(y_true - y_pred))
         elif metric.upper() == "MAPE":
-            results["MAPE"] = np.mean(np.abs((y_true - y_pred) / y_true.replace(0, np.nan))) * 100
+            # Replace zeros with NaN to avoid division by zero
+            denominator = y_true.replace(0, np.nan)
+            results["MAPE"] = np.mean(np.abs((y_true - y_pred) / denominator)) * 100
         else:
             raise ValueError(f"Unsupported metric: {metric}")
     return results
+
 
 def evaluate_from_config(y_true: pd.Series, y_pred: pd.Series, config: dict) -> Dict[str, float]:
     """
@@ -42,21 +56,29 @@ def evaluate_from_config(y_true: pd.Series, y_pred: pd.Series, config: dict) -> 
         Dict[str, float]: Dictionary with selected metrics.
     """
     metrics = config.get('metrics', ['RMSE', 'MAE'])
-    return compute_metrics(y_true, y_pred, metrics) 
+    return compute_metrics(y_true, y_pred, metrics)
+
 
 def save_metrics(metrics: dict, path: str) -> None:
     """
     Save the metrics dictionary as a YAML file to the given path.
+
     Args:
         metrics (dict): Metrics to save.
         path (str): File path to save the YAML.
     """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w") as f:
-        yaml.dump(metrics, f)
+    with open(path, "w", encoding="utf-8") as file_handle:
+        yaml.dump(metrics, file_handle)
 
-def prediction_visualization(y_true: pd.Series, y_pred: pd.Series, model_name: str, artifacts_dir: str) -> None:
+
+def prediction_visualization(
+    y_true: pd.Series,
+    y_pred: pd.Series,
+    model_name: str,
+    artifacts_dir: str
+) -> None:
     """
     Plot predicted vs real close price and save the figure in the artifacts directory.
 
@@ -74,6 +96,9 @@ def prediction_visualization(y_true: pd.Series, y_pred: pd.Series, model_name: s
     plt.ylabel("Close Price")
     plt.legend()
     plt.tight_layout()
-    plot_path = Path(artifacts_dir) / f"{model_name}_predicted_vs_real.png"
+
+    # Save figure to specified path
+    plot_filename = f"{model_name}_predicted_vs_real.png"
+    plot_path = Path(artifacts_dir) / plot_filename
     plt.savefig(plot_path)
     plt.close()

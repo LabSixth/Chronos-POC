@@ -1,0 +1,67 @@
+# Environment files
+.env
+venv/
+.venv/
+*.venv
+env/
+ENV/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Editor/OS metadata
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+*.DS_Store
+
+# Artifacts and outputs
+artifacts/
+*/artifacts/
+Model_Artifacts/
+*/Model_Artifacts/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Raw data / models
+data/*
+*/data/*
+models/*
+*/models/*
+!data/.gitkeep
+!models/.gitkeep
+!*/data/.gitkeep
+!*/models/.gitkeep
+
+# Large data files
+*.parquet
+combined_data.parquet
+*.csv
+*.h5
+*.pkl
+*.pt
+
+# Local configuration
+.local/
+.config/
+
+# Backup files
+*.bak
+*.backup
+
+# Docker related
+.dockerignore
+
+# Temporary root requirements
+/requirements.txt 

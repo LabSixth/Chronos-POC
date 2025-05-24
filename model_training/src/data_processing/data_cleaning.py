@@ -7,45 +7,56 @@ This module provides functionality for:
 3. Saving processed data to artifacts
 """
 
-from typing import Tuple, Dict, Any
-import pandas as pd
-from pathlib import Path
 import logging
+from pathlib import Path
+
+import pandas as pd
 import yaml
 
 logger = logging.getLogger(__name__)
 
-def clean_time_series(df: pd.DataFrame, config: dict) -> pd.DataFrame:
+def clean_time_series(data_frame: pd.DataFrame, config: dict) -> pd.DataFrame:
     """
     Clean and prepare time series data for single-series models.
     Renames columns to match model requirements (date -> ds, target -> y).
+    
     Args:
-        df (pd.DataFrame): Input DataFrame with raw data
+        data_frame (pd.DataFrame): Input DataFrame with raw data
         config (dict): Config dictionary with keys 'date_column' and 'target_column'
+        
     Returns:
         pd.DataFrame: Processed DataFrame with columns 'ds' and 'y'
     """
     date_column = config.get("date_column", "from")
     target_column = config.get("target_column", "close")
-    df = df.copy()
-    df[date_column] = pd.to_datetime(df[date_column]) # convert date column to datetime
-    df = df.set_index(date_column)[[target_column]] # set date column as index 
-    df = df.sort_index()  # ensure that the data is sorted by date
-    df = df.rename(columns={target_column: "y"})  # rename target column to y
-    df.index.name = "ds" # rename index to ds
-    return df
+    data_frame = data_frame.copy()
+    # convert date column to datetime
+    data_frame[date_column] = pd.to_datetime(data_frame[date_column])
+    # set date column as index
+    data_frame = data_frame.set_index(date_column)[[target_column]]
+    data_frame = data_frame.sort_index()  # ensure that the data is sorted by date
+    data_frame = data_frame.rename(columns={target_column: "y"})  # rename target column to y
+    data_frame.index.name = "ds" # rename index to ds
+    return data_frame
 
-def train_test_split(df: pd.DataFrame, config: dict):
+def train_test_split(data_frame: pd.DataFrame, config: dict):
     """
     Split time series data into train and test sets using config.
+    
+    Args:
+        data_frame (pd.DataFrame): Input DataFrame with processed data
+        config (dict): Config dictionary with 'test_size' parameter
+        
+    Returns:
+        tuple: (train_df, test_df) DataFrames containing train and test data
     """
     # Get split parameters from config
-    test_size = config.get('test_size', 0.2)  
+    test_size = config.get('test_size', 0.2)
     # Calculate split index
-    split_idx = int(len(df) * (1 - test_size))  
+    split_idx = int(len(data_frame) * (1 - test_size))
     # Split the data
-    train_df = df.iloc[:split_idx]
-    test_df = df.iloc[split_idx:]
+    train_df = data_frame.iloc[:split_idx]
+    test_df = data_frame.iloc[split_idx:]
     logger.info(
         "Split data into train (%d samples) and test (%d samples) sets",
         len(train_df),
@@ -61,6 +72,7 @@ def save_processed_data(
 ) -> None:
     """
     Save processed training and testing data to the artifacts directory.
+    
     Args:
         train_df (pd.DataFrame): Processed training data
         test_df (pd.DataFrame): Processed testing data
@@ -94,7 +106,6 @@ def save_processed_data(
         }
     }
     summary_path = path / f"{prefix}_summary.yaml"
-    with open(summary_path, 'w') as f:
-        yaml.dump(summary, f)
-    logger.info("Saved data summary to %s", summary_path) 
-    
+    with open(summary_path, 'w', encoding='utf-8') as file_handle:
+        yaml.dump(summary, file_handle)
+    logger.info("Saved data summary to %s", summary_path)
