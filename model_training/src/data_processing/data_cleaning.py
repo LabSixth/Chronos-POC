@@ -30,6 +30,7 @@ def clean_time_series(df: pd.DataFrame, config: dict) -> pd.DataFrame:
     df = df.copy()
     df[date_column] = pd.to_datetime(df[date_column]) # convert date column to datetime
     df = df.set_index(date_column)[[target_column]] # set date column as index 
+    df = df.sort_index()  # ensure that the data is sorted by date
     df = df.rename(columns={target_column: "y"})  # rename target column to y
     df.index.name = "ds" # rename index to ds
     return df

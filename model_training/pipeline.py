@@ -39,7 +39,7 @@ def main(config_path: str):
     df = load_data(data_cfg, local=not use_s3, s3=use_s3)
     logger.info(f"Data loaded from {'S3' if use_s3 else 'local'} source")
     
-    df_clean = clean_time_series(df, data_cfg)
+    df_clean = clean_time_series(df, clean_cfg)
     train_df, test_df = train_test_split(df_clean, clean_cfg)
     
     # Save processed data

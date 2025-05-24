@@ -17,6 +17,7 @@ from typing import Dict, Any
 import yaml
 from .data_loading import load_data
 from .data_cleaning import clean_time_series
+import matplotlib.dates as mdates
 
 logger = logging.getLogger(__name__)
 
@@ -88,12 +89,16 @@ def create_visualizations(df: pd.DataFrame, date_col: str, target_col: str, outp
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Time series plot
+    df = df.sort_values(date_col)
     plt.figure(figsize=(14, 7))
     plt.plot(df[date_col], df[target_col], label=target_col)
     plt.title(f'Time Series Plot of {target_col}')
     plt.xlabel('Date')
     plt.ylabel(target_col)
     plt.legend()
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig(output_dir / 'time_series_plot.png')
     plt.close()
@@ -134,18 +139,14 @@ def run_eda(config: dict, output_dir: str = "artifacts/eda") -> None:
     use_s3 = data_cfg.get("use_s3", False)
     df = load_data(data_cfg, local=not use_s3, s3=use_s3)
     df_clean = clean_time_series(df, config["data_processing"]["data_cleaning"])
-    
+    df_for_eda = df_clean.reset_index()  # columns: ds, y
+
     # Run analyses
-    basic_stats = analyze_basic_stats(df)
-    ts_stats = analyze_time_series(df, 
-                                 config["data_processing"]["data_cleaning"]["date_column"],
-                                 config["data_processing"]["data_cleaning"]["target_column"])
+    basic_stats = analyze_basic_stats(df_for_eda)
+    ts_stats = analyze_time_series(df_for_eda, "ds", "y")
     
     # Create visualizations
-    create_visualizations(df,
-                         config["data_processing"]["data_cleaning"]["date_column"],
-                         config["data_processing"]["data_cleaning"]["target_column"],
-                         output_path)
+    create_visualizations(df_for_eda, "ds", "y", output_path)
     
     # Save analysis results
     results = {

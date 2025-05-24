@@ -57,7 +57,7 @@ model_evaluation:
     - MAPE
 
 aws:
-  bucket_name: "your-bucket-name"
-  prefix: "your/prefix"
+  bucket_name: "polygon-data-stock"
+  prefix: "output"
   region: "us-east-1"
   upload: false  # Set to true to upload artifacts to S3
