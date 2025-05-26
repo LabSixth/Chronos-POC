@@ -11,7 +11,9 @@ data_processing:
   data_loading:
     use_s3: false  # Set to true to load data from S3
     local_path: "data/combined_data.parquet"   # Local data file path
-    s3_path: "s3://polygon-data-stock/output/combined_data.parquet"  # S3 data path (if needed)
+    s3_path: "s3://polygon-stock-data-cloud/output/combined_data.parquet"  # S3 data path (if needed)
+    bucket_name: polygon-stock-data-cloud
+    file_name: output/combined_data.parquet
     column_names:
       - afterHours
       - close
@@ -56,8 +58,8 @@ model_evaluation:
     - MAE
     - MAPE
 
-aws:
-  bucket_name: "polygon-data-stock"
-  prefix: "output"
+aws_outgress:
+  bucket_name: "polygon-stock-data-cloud"
+  prefix: "artifacts"
   region: "us-east-1"
-  upload: false  # Set to true to upload artifacts to S3
+

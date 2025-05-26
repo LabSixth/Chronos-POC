@@ -13,9 +13,8 @@ import argparse
 import datetime
 import logging.config
 from pathlib import Path
-
 import yaml
-
+from src.aws_utils import aws_data_ingress, aws_data_outgress
 from src.data_processing.data_cleaning import (
     clean_time_series, save_processed_data, train_test_split
 )
@@ -39,6 +38,10 @@ def main(config_path: str):
     Args:
         config_path: Path to the configuration YAML file
     """
+
+    # Ingress data from S3
+    aws_data_ingress.data_ingress()
+
     # Load config
     with open(config_path, "r", encoding="utf-8") as file:
         config = yaml.safe_load(file)
@@ -98,6 +101,9 @@ def main(config_path: str):
     logger.info("Chronos metrics: %s", chronos_metrics)
     prediction_visualization(test_df["y"], prophet_preds, "Prophet", artifacts)
     prediction_visualization(test_df["y"], chronos_preds, "Chronos", artifacts)
+
+    # Complete pipeline by uploading data to S3
+    aws_data_outgress.data_outgress()
 
 
 if __name__ == "__main__":
