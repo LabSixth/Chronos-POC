@@ -1,0 +1,8 @@
+AWS_Configurations:
+  Bucket_Name: "polygon-stock-data-cloud"
+  Prefix: "artifacts/"
+  Files:
+    - "prophet_preds.csv"
+    - "chronos_preds.csv"
+    - "Prophet_predicted_vs_real.png"
+    - "Chronos_predicted_vs_real.png"

@@ -1,0 +1,26 @@
+[project]
+name = "Cloud_Engineering_Frontend"
+version = "1.0.0"
+description = "A microservice for frontend Streamlit web application."
+requires-python = ">=3.11"
+authors = [
+    {name = "Yuxuan Huang", email = "yuxuan.eleanor.huang@gmail.com"},
+    {name = "Moyi Li", email = "mollubot@gmail.com"},
+    {name = "Mingsha Mo", email = "momingsha@gmail.com"},
+    {name = "Yee Jun Ow", email = "yeejunow@gmail.com"},
+    {name = "Tianyi Zhang", email = "chloe1107w@gmail.com"}
+]
+maintainers = [
+    {name = "Yuxuan Huang", email = "yuxuan.eleanor.huang@gmail.com"},
+    {name = "Moyi Li", email = "mollubot@gmail.com"},
+    {name = "Mingsha Mo", email = "momingsha@gmail.com"},
+    {name = "Yee Jun Ow", email = "yeejunow@gmail.com"},
+    {name = "Tianyi Zhang", email = "chloe1107w@gmail.com"}
+]
+dependencies = [
+    "boto3>=1.38.23",
+    "pandas>=2.2.3",
+    "plotly>=6.1.1",
+    "pyyaml>=6.0.2",
+    "streamlit>=1.45.1",
+]
