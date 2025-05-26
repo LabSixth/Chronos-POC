@@ -14,3 +14,5 @@ wheels/
 uv.lock
 .idea
 .DS_Store
+/model_training/data/
+/model_training/artifacts/
