@@ -1,0 +1,33 @@
+[project]
+name = "Cloud_Engineering_Chronos"
+version = "1.0.0"
+description = "A microservice to train and deploy different time series model to predict stock price movement."
+requires-python = ">=3.11"
+authors = [
+    {name = "Yuxuan Huang", email = "yuxuan.eleanor.huang@gmail.com"},
+    {name = "Moyi Li", email = "mollubot@gmail.com"},
+    {name = "Mingsha Mo", email = "momingsha@gmail.com"},
+    {name = "Yee Jun Ow", email = "yeejunow@gmail.com"},
+    {name = "Tianyi Zhang", email = "chloe1107w@gmail.com"}
+]
+maintainers = [
+    {name = "Yuxuan Huang", email = "yuxuan.eleanor.huang@gmail.com"},
+    {name = "Moyi Li", email = "mollubot@gmail.com"},
+    {name = "Mingsha Mo", email = "momingsha@gmail.com"},
+    {name = "Yee Jun Ow", email = "yeejunow@gmail.com"},
+    {name = "Tianyi Zhang", email = "chloe1107w@gmail.com"}
+]
+dependencies = [
+    "boto3>=1.38.23",
+    "chronos>=0.3",
+    "chronos-forecasting",
+    "matplotlib>=3.10.3",
+    "pandas>=2.2.3",
+    "pyarrow>=20.0.0",
+    "s3fs>=0.4.2",
+    "scikit-learn>=1.6.1",
+    "seaborn>=0.13.2",
+]
+
+[tool.uv.sources]
+chronos-forecasting = { git = "https://github.com/amazon-science/chronos-forecasting.git" }
