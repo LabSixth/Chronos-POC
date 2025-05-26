@@ -32,7 +32,13 @@ dependencies = [
     "s3fs>=0.4.2",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
+    "torch",
 ]
 
 [tool.uv.sources]
 chronos-forecasting = { git = "https://github.com/amazon-science/chronos-forecasting.git" }
+torch = { index = "pytorch" }
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"
