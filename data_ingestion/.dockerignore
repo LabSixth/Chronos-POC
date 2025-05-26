@@ -1,0 +1,13 @@
+.idea
+**/__pycache__
+artifacts
+.venv
+.gitignore
+.git
+.DS_Store
+.secrets
+.pylintrc
+.python-version
+README.md
+uv.lock
+.ruff_cache
