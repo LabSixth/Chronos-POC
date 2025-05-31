@@ -17,3 +17,4 @@ uv.lock
 /model_training/data/
 /model_training/artifacts/
 /frontend/data/
+/assets/
