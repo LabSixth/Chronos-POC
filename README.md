@@ -68,6 +68,17 @@ suggesting it is influenced more by discrete market events than by price traject
 
 ---
 
+## 🏛️ Architecture
+
+We have deployed Chronos in an end-to-end AWS pipeline using S3 for data storage, ECS for model training and inference,
+and Lambda for data ingestion. CloudWatch handled logging and monitoring, while IAM roles managed secure access across services.
+This setup enabled a scalable and modular environment for testing Chronos as a proof of concept.
+Additionally, we deployed a Streamlit application using ECS Fargate to visualize model outputs and interact with predictions in real-time.
+
+![Project Architecture](assets/architecture.png)
+
+---
+
 ## 🚀 Contributions
 
 This project would not have been possible without the dedication, collaboration, and contributions of everyone involved.
@@ -76,6 +87,7 @@ A heartfelt thank you to all the contributors who helped make this project a suc
 - [Yuxuan Huang](https://github.com/Eleanorhhhyxz)
 - [Moyi Li](https://github.com/Moyi-Li)
 - [Mingsha Mo](https://github.com/monicamomingsha)
+- [Yee Jun Ow](https://github.com/YeeJunOw19)
 - [Tianyi Zhang](https://github.com/th3ch103)
 
 ---
